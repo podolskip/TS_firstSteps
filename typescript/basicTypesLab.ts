@@ -31,7 +31,5 @@ let colorChange: Function = function(elem: Element,color:string):boolean {
     } else {
         colorChange(div,color2);
         changeColorB = !changeColorB;
-    }
-    
-    
+    };
 };

@@ -43,7 +43,10 @@
             this.div = div;
         };
 
-        changeColor(color:string): boolean{
+        changeColor(color:string | number): boolean{
+            if(typeof color === 'number'){
+                return true
+            }            
             (this.div as HTMLElement).style.backgroundColor = color;
             return true;  
         };
@@ -74,6 +77,10 @@
             (this.div as HTMLElement).style.width = squareSize;
             (this.div as HTMLElement).style.height = squareSize;
         };
+        changeColor (color: number) : boolean{
+            (this.div as HTMLElement).style.backgroundColor = Colors[color];
+            return true;
+        };
     };
 
     let elementSets: Array<ElementSet> = [];
@@ -85,14 +92,19 @@
         });
     };
     
+    let getRandomNumber: Function = function(min:number,max:number): number{
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random()*(max-min+1))+min;
+    };
+
     elementSets.map(function(elem,index){
-        let colorChangeClass = new colorChange2(elem.div);
-        (elem.div as HTMLElement).style.width = squareSize;
-        (elem.div as HTMLElement).style.height = squareSize;
+        let colorChangeClass = new numericColor(elem.div);
+        
         (elem.div as HTMLElement).style.border = '1px solid black';
         elem.button.textContent = 'Change Color';
         (elem.button as HTMLElement).onclick = function(elem){
-            colorChangeClass.changeColor(Colors[index]);
+            colorChangeClass.changeColor(getRandomNumber(0,3));
         };
         document.body.appendChild(elem.button);
         document.body.appendChild(elem.div);
