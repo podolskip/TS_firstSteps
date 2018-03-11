@@ -1,28 +1,39 @@
-module.exports = function(grunt){
+module.exports = function (grunt) {
+    "use strict";
     grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('tsify');
 
     grunt.initConfig({
-        ts:{
-            main:{
-                src:['./typescript/*.ts'],
-                dest:'./bundle/JS',
+        ts: {
+            main: {
+                src: ['./typescript/*.ts'],
+                dest: './bundle/JS',
                 options: {
                     rootDir: "./typescript/",
                     sourcemap: 'none'
-                  }
+                }
             }
         },
-        browserify:{
+        browserify2: {
             dist: {
                 files: {
-                  './bundle/JS/main.js': ['./typescript/*.ts']
+                    './bundle/JS/main.js': ['./typescript/*.ts']
                 },
                 options: {
-                  plugin: ['tsify']
+                    plugin: ['tsify']
                 }
-              }
+            }
+        },
+        browserify: {
+            dist: {
+                files: {
+                    './bundle/JS/basicTypesLab.js': ['./typescript/basicTypesLab.ts']
+                },
+                options: {
+                    plugin: ['tsify']
+                }
+            }
         }
     });
 

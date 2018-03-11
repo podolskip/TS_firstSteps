@@ -204,3 +204,128 @@ let something = new Hyundai("Something");
 
 twingo.maxSpeed();
 something.maxSpeed(150);
+
+
+// *************** TYPE Compatibility ************
+
+interface Name {
+    name:string;
+};
+
+let x1: Name;
+let y1 = {name:'Alice', location: 'Seattle'};
+
+x1 = y1;
+
+function sayHello(name: Name) {
+    console.log('Hello ' + name + '!');
+};
+
+sayHello(y1); // function passes even thought y1 has additionall key called 'location'
+
+// Enums
+enum Status { Ready, Waiting };
+enum Color { Red, Blue, Green };
+
+let status2 = Status.Ready;
+// status2 = Color.Green;  //error
+
+//************** TYPES ***************/
+
+//type interface
+
+let exammpleStr = "example string"; //TS will assumed that this type is a string
+let exampleNum = 1; //TS will assume that this is a string
+let exArray = [3,6,null];//TS will assume that this is a array of numbers
+
+//type assertion
+
+let underDeclaredType: any = "this i a string";
+let lengthOfString: number = (underDeclaredType as string).length;
+lengthOfString = (<string>underDeclaredType).length;
+
+//interface
+
+interface squareDescriptor {
+    name: string;
+    size: number;
+};
+
+//create method taking interface
+
+let sqFunction: Function = function(square: squareDescriptor):string {
+    return square.name;
+};
+
+let square = {
+    name: 'cool',
+    size: 6
+};
+
+let square2 = {
+    name: 'cool'
+};
+
+let executeFn = sqFunction(square);
+let executeFn2 = sqFunction(square2);
+console.log(executeFn2);
+
+class squareClass implements squareDescriptor {
+    name : string = 'bad';
+    size: number = 33;
+};
+
+//******************* FUNCTIONS */
+
+function createUser(n:string,ln:string,age?:number,nationality:string = "USA"): string {//questionmark tells that whis is an optional method argument
+    if (age){
+        return n + ' ' + ln + 'is ' + age + ' years old...';
+    } else {
+        return n + ' ' + ln + 'is  from ' + nationality;
+    };
+};
+
+//In TypeScript, you can gather these arguments together into a variable:
+function buildName(firstName: string, ...restOfName: string[]) {
+    return firstName + " " + restOfName.join(" ");
+}
+
+let employeeName = buildName("Joseph", "Samuel", "Lucas", "MacKinzie");
+console.log(employeeName);
+
+// Function while creating callbacks calls
+
+// class Handler {
+//     info!: string;
+//     onClickGood(this: void, e: Event) {
+//         // can't use this here because it's of type void!
+//         console.log('clicked!');
+//     }
+// }
+// class Handler2 {
+//     info!: string;
+//     onClickGood = (e: Event) => { this.info = e.message }
+// }
+
+// let h = new Handler();
+// uiElement.addClickListener(h.onClickGood);
+
+// Because onClickGood specifies its this type as void, it is legal to pass to addClickListener. Of course, this also means that it can't use this.info. If you want both then you'll have to use an arrow function:
+
+
+// ********** OVERLOADS *****************
+
+class Foo {
+    myMethod(a: string): void;
+    myMethod(a: number): void;
+    myMethod(a: number, b: string): void;
+    myMethod(a: any, b?: string): void {
+        alert(a.toString());
+    };
+};
+
+// As of TypeScript 1.4, you can typically remove the need for an overload using a union type. The above example can be better expressed using:
+
+function myMethod2(a: string | number, b?: string): void {
+    alert(a.toString());
+}
