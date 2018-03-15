@@ -28,7 +28,7 @@ module.exports = function (grunt) {
         browserify: {
             dist: {
                 files: {
-                    './bundle/JS/basicTypesLab.js': ['./typescript/excersise3.ts']
+                    './bundle/JS/rollDice.js': ['./typescript/diceRollApp.ts']
                 },
                 options: {
                     plugin: ['tsify']
