@@ -5,7 +5,7 @@ export let typeee:JQuery<HTMLElement> = $(".type");
 
 
 export class NewName {
-    firstName:string;s
+    firstName:string;
     constructor(n:string){
         this.firstName = n;
     };
