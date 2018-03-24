@@ -1,5 +1,6 @@
 import { applyMixins } from "./excersise"
 
+
 class genericClass<T> {
     val!: T;
 
@@ -78,11 +79,14 @@ class Mover {
     }
 }
 
+
 class movingElement implements Rotater, Mover {
     rotate!: (elem: HTMLElement) => any
     move!: (elem: HTMLElement) => any
     moveBack!: (elem: HTMLElement) => any
     rotateBack!: (elem: HTMLElement) => any
+    
+    
     element: HTMLElement
     constructor(elem: HTMLElement) {
         elem.onmousedown = () => {
@@ -97,9 +101,10 @@ class movingElement implements Rotater, Mover {
         elem.onmouseout = () => {
             this.rotateBack(elem);
         }
+        
         this.element = elem;
     }
-};
+}
 
 // function applyMixins(derivedClass: any, baseClasses: any[]) {
 //     baseClasses.forEach(baseClass => {
@@ -111,14 +116,29 @@ class movingElement implements Rotater, Mover {
 
 
 
-applyMixins(movingElement, [Mover, Rotater]);
+//applyMixins(movingElement, [Mover, Rotater]);
+
+interface jsonPromiseResp {
+    name?: string;
+    
+}
+
+function getAvatar_Promise (elem: HTMLElement) {
+    fetch('https://uinames.com/api/').then(function(response) {
+        return response.json();
+    }).then(function(response) {
+        alert('Hi! My name is ' + response.name);
+        let avatar = 'https://robohash.org/set_set3/'+ response.name +'?size=60x60' 
+        elem.style.backgroundImage = 'url("' + avatar + '")';
+        document.body.appendChild(elem);
+    })
+}
 
 for (let elem of standardElements) {
     elem.style.width = "60px"
     elem.style.height = "60px"
-    elem.style.backgroundColor = "green";
-    elem.style.margin = "5px";
-    let elemClass = new movingElement(elem);
-    document.body.appendChild(elemClass.element);
+    elem.style.margin = "5px"
+    let elemClass = new movingElement(elem);    
+    getAvatar_Promise(elemClass.element);
 };
 

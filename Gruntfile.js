@@ -15,17 +15,17 @@ module.exports = function (grunt) {
                 }
             }
         },
-        browserify2: {
+        browserify: {
             dist: {
                 files: {
-                    './bundle/JS/main.js': ['./typescript/*.ts']
+                    './typescript/advancedTypeScriptLab_async/JS/advancedTypeScriptLab.js': ['./typescript/advancedTypeScriptLab_async/JS/*.ts']
                 },
                 options: {
                     plugin: ['tsify']
                 }
             }
         },
-        browserify: {
+        browserify2: {
             dist: {
                 files: {
                     './bundle/JS/rollDice.js': ['./typescript/diceRollApp.ts']
